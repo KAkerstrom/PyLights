@@ -1,1 +1,0 @@
-scp -r . pi@192.168.0.170:dev/PyLights

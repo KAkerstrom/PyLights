@@ -48,6 +48,7 @@ if __name__ == "__main__":
         payload = [b.to_bytes(1, 'big') for b in bytes(98)]
 
         sendeth(src, dst, eth_type, payload)
+        print('1', end='', flush=True)
 
         '''
         Second packet
@@ -61,6 +62,7 @@ if __name__ == "__main__":
         payload = [b'\xFF', b'\xFF', b'\xFF']
         payload.extend([b.to_bytes(1, 'big') for b in bytes(60)])
         sendeth(src, dst, eth_type, payload)
+        print('1', end='', flush=True)
 
         '''
         Data packets
@@ -95,6 +97,7 @@ if __name__ == "__main__":
                 #payload.extend([b'\xFF', b'\x00', b'\x00'])
                 # B G R
             sendeth(src, dst, eth_type, payload)
+            print('1', end='', flush=True)
 
         #print(len(rows), len(rows[0]))
         # for i, row in enumerate(rows):
