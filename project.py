@@ -10,7 +10,8 @@ from socket import socket, AF_PACKET, SOCK_RAW
 from load_images import openFileAsByteArray
 import time
 
-time_between_frames = 0.2
+time_between_frames = 0.01
+time_between_refreshes = 0.5
 
 # Set up static variables
 src = b'\x22\x22\x33\x44\x55\x66'
@@ -67,7 +68,7 @@ class Packet:
             padding = b''.join([b.to_bytes(2, 'big')
                                 for b in bytes(self.panelWidth - len(pixel_data))])
             frame += padding
-        frame += b''.join([b for b in pixel_data])
+        frame += pixel_data
         print(frame[:20])
         self.frames.append(frame)
 
@@ -77,6 +78,7 @@ class Packet:
         s.send(second_frame)
         for i, frame in enumerate(self.frames):
             s.send(frame)
+            time.sleep(time_between_frames)
 
         # while i < self.panelHeight:
         #     i += 1
@@ -88,8 +90,7 @@ class Packet:
 
 if __name__ == "__main__":
     rows = openFileAsByteArray()
-    print(rows)
-    img = Packet(256, 32)
+    img = Packet(2, 2)
     for i, row in enumerate(rows):
         img.addRow(i, 0, row)
 
@@ -97,4 +98,4 @@ if __name__ == "__main__":
     while(True):
         print('.', end='', flush=True)
         img.send()
-        time.sleep(time_between_frames)
+        time.sleep(time_between_refreshes)

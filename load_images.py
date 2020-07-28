@@ -12,10 +12,11 @@ def openFileAsByteArray():
     rows = []
     print(width, height)
     for i in range(height):
-        rows.append([])
+        rows.append(b'')
         print('i', i)
         for j in range(width):
             print('j', j)
             r, g, b = img.getpixel((j, i))
-            rows[i].extend([bytes([b]), bytes([g]), bytes([r])])
+            rows[i] += bytes([b]) + bytes([g]) + bytes([r])
+    print(rows)
     return rows
